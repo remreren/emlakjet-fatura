@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    com.emlakjet: DEBUG
+#    root: DEBUG
+
+spring:
+  h2:
+    console:
+      enabled: true
+#  datasource:
+#    url: jdbc:h2:mem:testdb
+
+emlakjet:
+  creditLimit: 200
