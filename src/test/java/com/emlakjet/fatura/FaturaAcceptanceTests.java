@@ -2,12 +2,11 @@ package com.emlakjet.fatura;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
-class FaturaApplicationTests {
+@ActiveProfiles("test")
+public class FaturaAcceptanceTests {
 
-    @Test
-    void contextLoads() {
-    }
 
 }
