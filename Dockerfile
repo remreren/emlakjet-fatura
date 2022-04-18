@@ -1,4 +1,4 @@
 FROM openjdk:11
-COPY ./out/com/emlakjet/fatura/ /tmp
+COPY ./target/ /tmp
 WORKDIR /tmp
-ENTRYPOINT ["java", "FaturaApplication"]
+ENTRYPOINT ["java", "Fatura"]
