@@ -1,0 +1,37 @@
+{
+	"info": {
+		"_postman_id": "3026a68b-67d4-4108-988e-d8f21ded5ffc",
+		"name": "FaturaApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AddNewFatura",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Emre\",\r\n    \"lastName\": \"Eren\",\r\n    \"email\": \"eeren881@gmail.com\",\r\n    \"amount\": 50,\r\n    \"productName\": \"Settt\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/fatura/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"fatura",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
