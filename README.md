@@ -18,7 +18,8 @@ java -jar ./target/fatura.jar
 ```
 şeklinde uygulamayı başlatabilirsiniz ya da aşağıdaki komutu kullanarak Docker görüntüsü oluşturup daha sonra başlatabilirsiniz.
 ```bash
-docker build . --file Dockerfile --tag [herhangi bir isim]
+docker build . --file Dockerfile --tag [isim]
+docker run -d -p 8080:8080 [isim]
 ```
 #### 2. Yöntem: Maven ve Spring-Boot Yardımıyla Çalıştırmak
 Yukarıdaki yönteme alternatif olarak uygulamanızı tek komutla lokalde çalıştırmak isterseniz aşağıdaki komut işinizi görecektir.
