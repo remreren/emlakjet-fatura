@@ -34,7 +34,7 @@ public class FaturaIntegrationTests {
                 requestFaturaEmre.getAmount(), requestFaturaEmre.getProductName(),
                 String.format("TR%04d", fatura.getId()));
 
-        assertEquals(faturaExpected, fatura);
+        assertEquals(faturaExpected.toString(), fatura.toString());
     }
 
     @Test

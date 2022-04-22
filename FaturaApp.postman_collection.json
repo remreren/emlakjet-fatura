@@ -8,7 +8,7 @@
 		{
 			"name": "AddNewFatura",
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",

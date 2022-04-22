@@ -9,6 +9,8 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static com.emlakjet.fatura.util.FaturaUtility.*;
 
@@ -27,7 +29,7 @@ public class FaturaUnitTests {
                 .billNo(String.format("TR%04d", ret.getId()))
                 .build();
 
-        assertEquals(fatura, ret);
+        assertEquals(fatura.toString(), ret.toString());
     }
 
     @Test

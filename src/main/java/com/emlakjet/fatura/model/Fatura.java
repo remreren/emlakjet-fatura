@@ -1,20 +1,16 @@
 package com.emlakjet.fatura.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
+import lombok.*;
+import org.hibernate.Hibernate;
 
-import javax.annotation.PreDestroy;
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.UUID;
+import java.util.Objects;
 
 // PS = Purchasing Specialist
-@Data
+@Getter
+@Setter
+@ToString
 @Builder(toBuilder = true)
 @Entity
 @AllArgsConstructor
@@ -39,3 +35,4 @@ public class Fatura {
         billNo = String.format("TR%04d", id);
     }
 }
+
