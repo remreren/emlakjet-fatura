@@ -19,7 +19,12 @@
     <properties>
         <java.version>11</java.version>
         <start-class>com.emlakjet.fatura.FaturaApplication</start-class>
+        <spring-native.version>0.11.4</spring-native.version>
+        <native-buildtools.version>0.9.11</native-buildtools.version>
+        <repackage.classifier/>
+        <graalvm.version>21.2.0</graalvm.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -56,15 +61,15 @@
             <artifactId>reactor-test</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-web</artifactId>-->
-<!--            <version>2.6.6</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.experimental</groupId>
+            <artifactId>spring-native</artifactId>
+            <version>0.11.4</version>
         </dependency>
     </dependencies>
 
@@ -75,39 +80,120 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${project.parent.version}</version>
                 <configuration>
-                    <fork>true</fork>
-                    <mainClass>${start-class}</mainClass>
-                    <finalName>fatura</finalName>
+                    <classifier>${repackage.classifier}</classifier>
+<!--                    <fork>true</fork>-->
+<!--                    <mainClass>${start-class}</mainClass>-->
+<!--                    <finalName>fatura</finalName>-->
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <image>
+                        <builder>paketobuildpacks/builder:tiny</builder>
+                        <env>
+                            <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+                        </env>
+                    </image>
                 </configuration>
                 <executions>
                     <execution>
                         <goals>
+<!--                            <goal>build-image</goal>-->
                             <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>com.emlakjet.fatura.FaturaApplication</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <finalName>fatura</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
-                </configuration>
+                <groupId>org.springframework.experimental</groupId>
+                <artifactId>spring-aot-maven-plugin</artifactId>
+                <version>${spring-native.version}</version>
+                <executions>
+                    <execution>
+                        <id>test-generate</id>
+                        <goals>
+                            <goal>test-generate</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>https://repo.spring.io/release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>https://repo.spring.io/release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <profiles>
+        <profile>
+            <id>native</id>
+            <properties>
+                <repackage.classifier>exec</repackage.classifier>
+                <native-buildtools.version>0.9.11</native-buildtools.version>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.junit.platform</groupId>
+                    <artifactId>junit-platform-launcher</artifactId>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <version>${native-buildtools.version}</version>
+                        <extensions>true</extensions>
+                        <executions>
+                            <execution>
+                                <id>test-native</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>build-native</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+<!--                        <configuration>-->
+<!--                            <buildArgs>-->
+<!--                                <buildArg>&#45;&#45;enable-https</buildArg>-->
+<!--                                <buildArg>&#45;&#45;enable-https</buildArg>-->
+<!--                            </buildArgs>-->
+<!--                        </configuration>-->
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

@@ -20,9 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FaturaIntegrationTests {
 
     @Autowired
-    private FaturaRepository faturaRepository;
-
-    @Autowired
     private FaturaService faturaService;
 
     @Test

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class FaturaExceptionHandler {
 
     @ExceptionHandler(SumOfPSFaturasExceededLimit.class)
-    public ResponseEntity<?> faturaSumExceededLimit(SumOfPSFaturasExceededLimit except) {
-        return new ResponseEntity<>(new ErrorResponse(except.getMessage(), null), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorResponse<Object>> faturaSumExceededLimit(SumOfPSFaturasExceededLimit except) {
+        return new ResponseEntity<>(new ErrorResponse<>(except.getMessage(), null), HttpStatus.BAD_REQUEST);
     }
 }
